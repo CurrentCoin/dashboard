@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
+import {AppContext} from "./AppProvider";
 
 const Logo = styled.div`
   font-size: 1.5em;
@@ -7,13 +8,38 @@ const Logo = styled.div`
 
 const Bar = styled.div`
   display: grid;
-  grid-template-column: 180px auto 100px 100px;
+  margin-bottom: 40px;
+  grid-template-columns: 180px auto 100px 100px;
 `
+
+const ControlButtonElem = styled.div`
+  cursor: pointer;
+  ${props => props.active && css`
+text-shadow: 0px 0px 60px #03ff03;
+  `}
+`
+
+function ControlButton({name, active}){
+    return (
+	    <AppContext.Consumer>
+	    {({page}) => (
+	    <ControlButtonElem active={page === active}>
+	    {toProperCase(name)}
+		</ControlButtonElem>
+	    )}
+	    </AppContext.Consumer>
+    )
+}
+
+function toProperCase(lower){
+    return lower.charAt(0).toUpperCase() + lower.substr(1);
+}
 
 export default function(){
     return <Bar>
 	<Logo>Cryptocurrency</Logo>
-	<div>Dashboard</div>
-	<div>Settings</div>
+	<div></div>
+	<ControlButton active name="dashboard"/>
+	<ControlButton name="settings"/>
 	</Bar>
 }
