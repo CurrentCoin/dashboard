@@ -22,8 +22,10 @@ text-shadow: 0px 0px 60px #03ff03;
 function ControlButton({name, active}){
     return (
 	    <AppContext.Consumer>
-	    {({page}) => (
-	    <ControlButtonElem active={page === active}>
+	    {({page, setPage}) => (
+		    <ControlButtonElem
+		active={page === active}
+		    onClick={()=> setPage(name)}>
 	    {toProperCase(name)}
 		</ControlButtonElem>
 	    )}
